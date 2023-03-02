@@ -1,3 +1,4 @@
+push();
 let starX = [];
 let starY = [];
 let starAlpha = [];
@@ -21,4 +22,7 @@ function draw() {
     ellipse(starX[index], starY[index], 3);
     starAlpha[index] = starAlpha[index] + 0.02;
   }
+
+  box(100, 00, 100);
 }
+pop();
