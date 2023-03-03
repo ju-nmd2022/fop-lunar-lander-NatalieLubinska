@@ -21,9 +21,9 @@ function moon() {
   ellipse(400, 700, 700, 600);
 }
 
-function spaceship() {
+function spaceship(x, y) {
   noStroke();
-
+  translate(x, y);
   // spaceship body top
   fill(255, 0, 0);
   ellipse(370, 150, 100);
@@ -48,6 +48,11 @@ function startScreen() {
   text("Start", 200, 100);
 }
 
+let spaceshipY = 100;
+let velocity = 1;
+let acceleration = 0.2;
+let isGameActive = true;
+
 function gameScreen() {
   background(255, 255, 0);
 
@@ -61,7 +66,22 @@ function gameScreen() {
   }
 
   moon();
-  spaceship();
+  spaceship(100, spaceshipY);
+  spaceshipY = spaceshipY + velocity;
+  velocity = velocity + acceleration;
+
+  if (isGameActive) {
+    spaceshipY = spaceshipY + velocity;
+    velocity = velocity + acceleration;
+
+    if (mouseIsPressed) {
+      velocity = velocity - 0.2;
+    }
+
+    if (spaceshipY > 100) {
+      isGameActive = false;
+    }
+  }
 }
 
 function resultScreen() {
@@ -83,10 +103,6 @@ function draw() {
 
 function mouseClicked() {
   if (state === "start") {
-    state = "game";
-  } else if (state === "game") {
-    state = "result";
-  } else if (state === "result") {
     state = "game";
   }
 }
