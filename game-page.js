@@ -1,3 +1,14 @@
+function setup() {
+  createCanvas(900, 600);
+  window.addEventListener("keydown", moveUp);
+}
+
+function moveUp(event) {
+  if (event.code === "ArrowUp") {
+    spaceshipY -= 150; // Move the spaceship
+  }
+}
+
 //stars
 push();
 
@@ -26,21 +37,18 @@ function spaceship(x, y) {
   translate(x, y);
   // spaceship body top
   fill(255, 0, 0);
-  ellipse(370, 150, 100);
+  ellipse(355, 150, 50);
 
   // spaceship body rec
   fill(255, 0, 0);
-  rect(320, 150, 100, 200);
+  rect(330, 150, 50, 100);
 
   //window circle
   fill(255, 255, 255);
-  ellipse(370, 200, 60);
+  ellipse(355, 200, 30);
 
   fill(255, 255, 255);
-  rect(340, 200, 60);
-
-  fill(0, 255, 0);
-  ellipse(370, 210, 30);
+  rect(340, 200, 30);
 }
 
 function startScreen() {
@@ -48,14 +56,14 @@ function startScreen() {
   text("Start", 200, 100);
 }
 
-let spaceshipY = 100;
-let velocity = 1;
-let acceleration = 0.2;
+let spaceshipY = -300;
+let velocity = 0.3;
+let acceleration = 0.1;
 let isGameActive = true;
+acceleration = 0.1;
 
 function gameScreen() {
   background(255, 255, 0);
-
   noStroke();
   background(0, 0, 0);
 
@@ -67,20 +75,15 @@ function gameScreen() {
 
   moon();
   spaceship(100, spaceshipY);
+
   spaceshipY = spaceshipY + velocity;
   velocity = velocity + acceleration;
 
-  if (isGameActive) {
+  if (spaceshipY >= 200) {
+    velocity = 0;
+  } else {
     spaceshipY = spaceshipY + velocity;
     velocity = velocity + acceleration;
-
-    if (mouseIsPressed) {
-      velocity = velocity - 0.2;
-    }
-
-    if (spaceshipY > 100) {
-      isGameActive = false;
-    }
   }
 }
 
