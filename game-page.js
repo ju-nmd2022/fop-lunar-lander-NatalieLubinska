@@ -8,6 +8,7 @@ let acceleration = 0.2;
 const canvasW = 600;
 const canvasH = 600;
 
+//setup for game
 function setup() {
   createCanvas(canvasW, canvasH);
   frameRate(30);
@@ -18,7 +19,7 @@ function setup() {
   speed = 1;
   acceleration = 0.2;
 }
-
+//setup for start page
 function setup2() {
   createCanvas(canvasW, canvasH);
   frameRate(30);
@@ -31,7 +32,6 @@ function setup2() {
 }
 
 //stars
-
 let starX = [];
 let starY = [];
 let starAlpha = [];
@@ -44,12 +44,12 @@ for (let i = 0; i < 400; i++) {
   starY.push(y);
   starAlpha.push(alpha);
 }
-
+//moon
 function moon() {
   fill(65, 65, 65);
-  ellipse(400, 600, 400);
+  ellipse(400, 600, 200);
 }
-
+//spaceship
 function spaceship(x, y) {
   noStroke();
   translate(x - 300, y);
@@ -93,7 +93,7 @@ function spaceship(x, y) {
 
   push();
 
-  // my friend helped me to creat this motion fire
+  // my friend helped me to create this motion fire
 
   fill(255, 102, 0);
   for (let i = 0; i < 50; i++) {
@@ -107,15 +107,17 @@ function spaceship(x, y) {
 
   pop();
 }
-
+//startscreen
 function startScreen() {
   background(0, 0, 0);
 
   push();
   fill(255, 255, 255);
+  textSize(40);
+  text("Lunar Lander Game", 100, 100);
   textSize(20);
-  text("Click on backspace to start", 300, 300);
-  text("Use up arrow key to  to land safely", 200, 100);
+  text("Click on backspace to start", 100, 300);
+  text("Use the arrow keys to land safely", 100, 250);
 
   pop();
 
@@ -130,24 +132,33 @@ function startScreen() {
     starAlpha[index] = starAlpha[index] + 0.02;
   }
 }
-
+//gamescreen
 function gameScreen() {
   background(255, 255, 0);
   noStroke();
   background(0, 0, 0);
-
+  //stars
   for (let index in starX) {
     fill(255, 255, 255, Math.abs(Math.sin(starAlpha[index])) * 255);
     ellipse(starX[index], starY[index], 3);
     starAlpha[index] = starAlpha[index] + 0.02;
   }
+  push();
+  //text
+  fill(255, 255, 255);
+  textSize(20);
+  text("Land on the moon using the arrows", 100, 100);
+  pop();
 
+  //moon
   moon();
+  //spaceship
   spaceship(spaceshipX, spaceshipY, 0.4, keyIsDown(38));
 
   spaceshipY = spaceshipY + speed;
   speed = speed + acceleration;
 
+  //moving the spaceship
   if (keyIsDown(38)) {
     speed = speed - 0.5;
   }
@@ -157,20 +168,20 @@ function gameScreen() {
   if (keyIsDown(RIGHT_ARROW)) {
     spaceshipX += 4;
   }
-
-  if (spaceshipY >= 200 && speed > 8) {
+  //cridentials for win & lose
+  if (spaceshipY >= 300 && speed > 8) {
     speed = 1;
     acceleration = 0.2;
     state = "lose";
-    //spaceshipY = 100;
-  } else if (spaceshipY >= 200) {
+    spaceshipY = 100;
+  } else if (spaceshipY >= 300 && spaceshipX >= 300 && spaceshipX <= 500) {
     speed = 1;
     acceleration = 0.2;
     state = "win";
     spaceshipY = 100;
   }
 }
-
+//winscreen
 function winScreen() {
   background(0, 0, 0);
   //stars for background
@@ -181,12 +192,16 @@ function winScreen() {
     starAlpha[index] = starAlpha[index] + 0.02;
   }
   pop();
+
+  textSize(40);
+  text("You won!", 100, 100);
   textSize(20);
   fill(255, 255, 255);
-  text("You landed safely! Congrats!", 100, 250);
+
   text("Click on backspace to play again", 100, 300);
   text("Click on left arrow to go back to startscreen", 100, 350);
 
+  //setup to restart game
   if (keyIsDown(BACKSPACE)) {
     setup();
   }
@@ -194,7 +209,7 @@ function winScreen() {
     setup2();
   }
 }
-
+//losescreen
 function looseScreen() {
   background(0, 0, 0);
   //stars for background
@@ -206,11 +221,13 @@ function looseScreen() {
   }
   pop();
   fill(255, 255, 255);
+  textSize(40);
+  text("You crashed!", 100, 100);
   textSize(20);
-  text("You crashed the spaceship!", 100, 250);
   text("Click on backspace to play again", 100, 300);
   text("Click on left arrow to go back to startscreen", 100, 350);
 
+  //setup to restart game
   if (keyIsDown(BACKSPACE)) {
     setup();
   }
@@ -218,7 +235,7 @@ function looseScreen() {
     setup2();
   }
 }
-
+//states
 function draw() {
   clear();
   if (state === "start") {
