@@ -116,8 +116,8 @@ function startScreen() {
   textSize(40);
   text("Lunar Lander Game", 100, 100);
   textSize(20);
-  text("Click on backspace to start", 100, 300);
-  text("Use the arrow keys to land safely", 100, 250);
+  text("Click on backspace to start", 100, 400);
+  text("Use the arrow keys to land safely", 100, 450);
 
   pop();
 
@@ -198,8 +198,8 @@ function winScreen() {
   textSize(20);
   fill(255, 255, 255);
 
-  text("Click on backspace to play again", 100, 300);
-  text("Click on left arrow to go back to startscreen", 100, 350);
+  text("Click on backspace to play again", 100, 400);
+  text("Click on left arrow to go back to startscreen", 100, 450);
 
   //setup to restart game
   if (keyIsDown(BACKSPACE)) {
@@ -224,8 +224,8 @@ function looseScreen() {
   textSize(40);
   text("You crashed!", 100, 100);
   textSize(20);
-  text("Click on backspace to play again", 100, 300);
-  text("Click on left arrow to go back to startscreen", 100, 350);
+  text("Click on backspace to play again", 100, 400);
+  text("Click on left arrow to go back to startscreen", 100, 450);
 
   //setup to restart game
   if (keyIsDown(BACKSPACE)) {
