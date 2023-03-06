@@ -8,10 +8,18 @@ let acceleration = 0.2;
 const canvasW = 900;
 const canvasH = 600;
 
-let startBtn;
-let restartBtn;
-
 function setup() {
+  createCanvas(canvasW, canvasH);
+  frameRate(30);
+  state = "game";
+  isGameActive = true;
+  spaceshipY = -300;
+  spaceshipX = 100;
+  speed = 1;
+  acceleration = 0.2;
+}
+
+function setup2() {
   createCanvas(canvasW, canvasH);
   frameRate(30);
   state = "start";
@@ -20,27 +28,13 @@ function setup() {
   spaceshipX = 100;
   speed = 1;
   acceleration = 0.2;
-
-  startBtn = createButton("Play");
-  startBtn.mousePressed(playGame);
-  startBtn.style("font-size", "30");
-  startBtn.position(200, 200);
-  startBtn.style("display", "show");
-
-  restartBtn = createButton("Restart");
-  restartBtn.mousePressed(playGame);
-  restartBtn.style("font-size", "30");
-  restartBtn.position(200, 200);
-  restartBtn.style("display", "none");
 }
 
-//star
-push();
+//stars
 
 let starX = [];
 let starY = [];
 let starAlpha = [];
-
 for (let i = 0; i < 400; i++) {
   const x = Math.floor(Math.random() * canvasW);
   const y = Math.floor(Math.random() * canvasH);
@@ -50,7 +44,6 @@ for (let i = 0; i < 400; i++) {
   starY.push(y);
   starAlpha.push(alpha);
 }
-pop();
 
 function moon() {
   fill(65, 65, 65);
@@ -83,12 +76,12 @@ function startScreen() {
   push();
   fill(255, 255, 255);
   textSize(20);
-  text("Click to start", 300, 300);
+  text("Click on backspace to start", 300, 300);
   text("Use up arrow key to  to land safely", 200, 100);
 
   pop();
 
-  if (keyIsDown(UP_ARROW)) {
+  if (keyIsDown(BACKSPACE)) {
     state = "game";
   }
 
@@ -141,18 +134,50 @@ function gameScreen() {
 }
 
 function winScreen() {
-  background(255, 0, 255);
-  text("Win", 200, 100);
-  restartBtn.style("display", "show");
+  background(0, 0, 0);
+  //stars for background
+  push();
+  for (let index in starX) {
+    fill(255, 255, 255, Math.abs(Math.sin(starAlpha[index])) * 255);
+    ellipse(starX[index], starY[index], 3);
+    starAlpha[index] = starAlpha[index] + 0.02;
+  }
+  pop();
+  textSize(20);
+
+  text("You landed safely! Congrats!", 200, 200);
+  text("Click on backspace to play again", 180, 400);
+  text("Click on left arrow to go back to startscreen", 180, 300);
+
+  if (keyIsDown(BACKSPACE)) {
+    setup();
+  }
+  if (keyIsDown(LEFT_ARROW)) {
+    setup2();
+  }
 }
 
 function looseScreen() {
-  background(255, 0, 255);
+  background(0, 0, 0);
+  //stars for background
+  push();
+  for (let index in starX) {
+    fill(255, 255, 255, Math.abs(Math.sin(starAlpha[index])) * 255);
+    ellipse(starX[index], starY[index], 3);
+    starAlpha[index] = starAlpha[index] + 0.02;
+  }
+  pop();
   fill(255, 255, 255);
   textSize(20);
   text("Loose", 200, 100);
+  text("Click on backspace to play again", 180, 400);
+  text("Click on left arrow to go back to startscreen", 180, 300);
+
   if (keyIsDown(BACKSPACE)) {
     setup();
+  }
+  if (keyIsDown(LEFT_ARROW)) {
+    setup2();
   }
 }
 
@@ -170,8 +195,6 @@ function draw() {
 }
 
 function playGame() {
-  startBtn.style("display", "none");
-  restartBtn.style("display", "none");
   state = "game";
   isGameActive = true;
   spaceshipY = -300;
