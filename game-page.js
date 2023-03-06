@@ -5,7 +5,7 @@ let spaceshipX = 100;
 let speed = 1;
 let acceleration = 0.2;
 
-const canvasW = 900;
+const canvasW = 600;
 const canvasH = 600;
 
 function setup() {
@@ -47,12 +47,12 @@ for (let i = 0; i < 400; i++) {
 
 function moon() {
   fill(65, 65, 65);
-  ellipse(400, 700, 700, 600);
+  ellipse(400, 600, 400);
 }
 
 function spaceship(x, y) {
   noStroke();
-  translate(x, y);
+  translate(x - 300, y);
 
   // spaceship body top
   fill(255, 0, 0);
@@ -62,12 +62,50 @@ function spaceship(x, y) {
   fill(255, 0, 0);
   rect(330, 150, 50, 100);
 
-  //window circle
-  fill(255, 255, 255);
-  ellipse(355, 200, 30);
+  // window circle
+  fill(0, 191, 255);
+  ellipse(355, 170, 30);
 
-  fill(255, 255, 255);
-  rect(340, 200, 30);
+  // window highlight
+  fill(255);
+  ellipse(355, 165, 10, 5);
+
+  // left wing
+  fill(255, 0, 0);
+  triangle(330, 180, 330, 250, 285, 215);
+  fill(255, 102, 102);
+  triangle(325, 185, 325, 245, 280, 210);
+
+  // right wing
+  fill(255, 0, 0);
+  triangle(380, 180, 380, 250, 425, 215);
+  fill(255, 102, 102);
+  triangle(385, 185, 385, 245, 430, 210);
+
+  // engine
+  fill(255, 153, 0);
+  ellipse(355, 250, 60, 30);
+
+  // engine details
+  fill(255, 102, 0);
+  ellipse(355, 250, 45, 20);
+  ellipse(355, 250, 30, 10);
+
+  push();
+
+  // my friend helped me to creat this motion fire
+
+  fill(255, 102, 0);
+  for (let i = 0; i < 50; i++) {
+    let xOff = random(-10, 10);
+    let yOff = random(-20, 0);
+    let d = dist(xOff, yOff, 0, 0);
+    let alpha = map(d, 0, 20, 255, 0);
+    fill(255, 102, 0, alpha);
+    ellipse(355 + xOff, 280 + yOff, 20, 40);
+  }
+
+  pop();
 }
 
 function startScreen() {
@@ -120,7 +158,7 @@ function gameScreen() {
     spaceshipX += 4;
   }
 
-  if (spaceshipY >= 200 && speed > 10) {
+  if (spaceshipY >= 200 && speed > 8) {
     speed = 1;
     acceleration = 0.2;
     state = "lose";
@@ -144,10 +182,10 @@ function winScreen() {
   }
   pop();
   textSize(20);
-
-  text("You landed safely! Congrats!", 200, 200);
-  text("Click on backspace to play again", 180, 400);
-  text("Click on left arrow to go back to startscreen", 180, 300);
+  fill(255, 255, 255);
+  text("You landed safely! Congrats!", 100, 250);
+  text("Click on backspace to play again", 100, 300);
+  text("Click on left arrow to go back to startscreen", 100, 350);
 
   if (keyIsDown(BACKSPACE)) {
     setup();
@@ -169,9 +207,9 @@ function looseScreen() {
   pop();
   fill(255, 255, 255);
   textSize(20);
-  text("Loose", 200, 100);
-  text("Click on backspace to play again", 180, 400);
-  text("Click on left arrow to go back to startscreen", 180, 300);
+  text("You crashed the spaceship!", 100, 250);
+  text("Click on backspace to play again", 100, 300);
+  text("Click on left arrow to go back to startscreen", 100, 350);
 
   if (keyIsDown(BACKSPACE)) {
     setup();
