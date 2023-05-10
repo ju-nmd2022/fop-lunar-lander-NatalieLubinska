@@ -1,5 +1,5 @@
-let isGameActive = true;
 let state = "start";
+let isGameActive = true;
 let spaceshipY = -300;
 let spaceshipX = 100;
 let speed = 1;
@@ -8,22 +8,23 @@ let acceleration = 0.2;
 const canvasW = 600;
 const canvasH = 600;
 
-//setup for game
-function setup() {
+//setup for start page
+function setup2() {
   createCanvas(canvasW, canvasH);
   frameRate(30);
-  state = "game";
+  state = "start";
   isGameActive = true;
   spaceshipY = -300;
   spaceshipX = 100;
   speed = 1;
   acceleration = 0.2;
 }
-//setup for start page
-function setup2() {
+
+//setup for game
+function setup() {
   createCanvas(canvasW, canvasH);
   frameRate(30);
-  state = "start";
+  state = "game";
   isGameActive = true;
   spaceshipY = -300;
   spaceshipX = 100;
@@ -228,11 +229,12 @@ function looseScreen() {
   text("Click on left arrow to go back to startscreen", 100, 450);
 
   //setup to restart game
-  if (keyIsDown(BACKSPACE)) {
-    setup();
-  }
+
   if (keyIsDown(LEFT_ARROW)) {
     setup2();
+  }
+  if (keyIsDown(BACKSPACE)) {
+    setup();
   }
 }
 //states
@@ -247,13 +249,4 @@ function draw() {
   } else if (state === "lose") {
     looseScreen();
   }
-}
-
-function playGame() {
-  state = "game";
-  isGameActive = true;
-  spaceshipY = -300;
-  spaceshipX = 100;
-  speed = 1;
-  acceleration = 0.2;
 }
